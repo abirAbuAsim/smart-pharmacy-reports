@@ -5,6 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Dropdown menu -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <script src="//code.jquery.com/jquery-1.12.3.js"></script>
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
@@ -23,11 +28,6 @@
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-
-    <!-- Dropdown menu -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <style>
 </style>
@@ -87,13 +87,13 @@
 
                     <form class="form-inline" action="/action_page.php">
                         <label>From: </label>
-                        <div id="datepicker" class="input-group date" data-date-format="mm-dd-yyyy"
+                        <div id="datepicker1" class="input-group date" data-date-format="mm-dd-yyyy"
                              style="margin-right: 20px;">
                             <input class="form-control" type="text" readonly/>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                         <label>To: </label>
-                        <div id="datepicker" class="input-group date" data-date-format="mm-dd-yyyy" style="margin-right: 20px;">
+                        <div id="datepicker2" class="input-group date" data-date-format="mm-dd-yyyy" style="margin-right: 20px;">
                             <input class="form-control" type="text" readonly/>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
@@ -599,7 +599,12 @@
     });
 
     $(function () {
-        $("#datepicker").datepicker({
+        $("#datepicker1").datepicker({
+            autoclose: true,
+            todayHighlight: true
+        }).datepicker('update', new Date());
+
+        $("#datepicker2").datepicker({
             autoclose: true,
             todayHighlight: true
         }).datepicker('update', new Date());
