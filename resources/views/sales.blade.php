@@ -21,11 +21,11 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet"
-          type="text/css"/>
+    <!-- Date Picker CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css"/>
 
+    <!-- Date Picker JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 </head>
@@ -133,7 +133,7 @@
                     <tbody>
                     @foreach ($orders as $order)
                         <tr>
-                            <td>{{ date('d-m-Y', strtotime($order['order_date'])) }}</td>
+                            <td id="date">{{ date('d-m-Y', strtotime($order['order_date'])) }}</td>
                             <td>{{ $order['invoice_number'] }}</td>
                             <td>{{ $order['pharmacy_name'] }}</td>
                             <td>{{ $order['chemist_mobile_number'] }}</td>
@@ -166,5 +166,6 @@
             todayHighlight: true
         }).datepicker('update', new Date());
     });
+
 </script>
 </html>

@@ -17,13 +17,10 @@ class SalesOrderController extends Controller
     {
         $client = new Client;
 
-        $response = $client->post('http://54.68.18.149:9696/public/order-list', [
+        $response = $client->post('http://103.23.41.189:9696/public/all-sales-orders', [
             'headers' => [
                 'APPAUTHID' => 'intel_pharma',
                 'APPTOKEN' => '3fb8744b8ef6f65ed9d5687c4f45e6dd',
-            ],
-            'form_params' => [
-                'company_id' => 7,
             ],
         ]);
 
