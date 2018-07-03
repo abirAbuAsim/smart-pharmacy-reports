@@ -120,31 +120,27 @@
                 <table id="salesOrderTable" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                     <tr>
+                        <th>Order Date</th>
                         <th>Invoice Number</th>
                         <th>Pharmacy Name</th>
                         <th>Contact Number</th>
-                        <th>Address</th>
                         <th>Order Status</th>
-                        <th>Types</th>
-                        <th>Initial Price</th>
+                        <th>Actual Price</th>
                         <th>Payable Price</th>
                         <th>Discount</th>
-                        <th>Order Date</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($orders as $order)
                         <tr>
+                            <td>{{ date('d-m-Y', strtotime($order['order_date'])) }}</td>
                             <td>{{ $order['invoice_number'] }}</td>
                             <td>{{ $order['pharmacy_name'] }}</td>
                             <td>{{ $order['chemist_mobile_number'] }}</td>
-                            <td>{{ $order['address'] }}</td>
                             <td>{{ $order['order_status'] }}</td>
-                            <td>{{ $order['number_of_medicine_types'] }}</td>
                             <td>{{ $order['total_actual_price'] }}</td>
                             <td>{{ $order['total_payable_price'] }}</td>
                             <td>{{ $order['discount'] }}</td>
-                            <td>{{ $order['order_date'] }}</td>
                         </tr>
                     @endforeach
                     </tbody>
