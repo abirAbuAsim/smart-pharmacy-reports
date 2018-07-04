@@ -24,3 +24,5 @@ Route::get('/sales', 'SalesOrderController@index')->name('sales');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('/sales', 'SalesOrderController@showSearchResult');

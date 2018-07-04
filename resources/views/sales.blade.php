@@ -84,31 +84,28 @@
                 <div class="panel-heading">Search Sold Orders</div>
                 <div class="panel-body">
 
-
-                    <form class="form-inline" action="/action_page.php">
+                    <form class="form-inline" method="post" action="{{action('SalesOrderController@showSearchResult')}}">
+                        @csrf
                         <label>From: </label>
-                        <div id="datepicker1" class="input-group date" data-date-format="mm-dd-yyyy"
-                             style="margin-right: 20px;">
-                            <input class="form-control" type="text" readonly/>
+                        <div id="fromDatePicker" class="input-group date" data-date-format="yyyy-mm-dd"
+                             style="margin: 20px;">
+                            <input type="text" class="form-control" id="fromDatePickerInput" name="fromDatePickerInput" value="Date" readonly/>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                         <label>To: </label>
-                        <div id="datepicker2" class="input-group date" data-date-format="mm-dd-yyyy" style="margin-right: 20px;">
-                            <input class="form-control" type="text" readonly/>
+                        <div id="toDatePicker" class="input-group date" data-date-format="yyyy-mm-dd" style="margin: 20px;">
+                            <input type="text" class="form-control" id="toDatePickerInput" name="toDatePickerInput" value="Date" readonly/>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
 
-                        <div class="input-group" style="margin-right: 20px;">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
-                                    Select Pharmacy Name
-                                    <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                    @foreach ($pharmacyNames as $name)
-                                        <li><a href="#">{{$name}}</a></li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                        <div class="form-group" style="margin: 20px;">
+                            <label for="selectedPharmacy">Select Pharmacy Name:</label>
+                            <select class="form-control" id="selectedPharmacy" name="selectedPharmacy">
+                                <option value=""> Please Choose Pharmacy</option>
+                                @foreach ($pharmacyList as $pharmacy)
+                                    <option value="{{$pharmacy['pharmacy_id']}}">{{$pharmacy['pharmacy_name']}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-primary btn-default">Search</button>
                     </form>
@@ -156,12 +153,12 @@
     });
 
     $(function () {
-        $("#datepicker1").datepicker({
+        $("#fromDatePicker").datepicker({
             autoclose: true,
             todayHighlight: true
         }).datepicker('update', new Date());
 
-        $("#datepicker2").datepicker({
+        $("#toDatePicker").datepicker({
             autoclose: true,
             todayHighlight: true
         }).datepicker('update', new Date());
