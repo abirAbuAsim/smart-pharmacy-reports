@@ -24,24 +24,23 @@ class SalesOrderController extends Controller
             ],
         ]);
 
-        // You need to parse the response body
-        // This will parse it into an array
         $response = json_decode($response->getBody(), true);
-        $order_list = $response['data']['order_list'];
-        //print_r($order_list);
+        $orderList = $response['data']['order_list'];
 
-        $name = 'San Juan Vacation';
-        return view('sales', ['orders' => $order_list]);
+        // Get pharmacy names
+        $client = new Client;
+        $response = $client->get('http://3931ccf5.ngrok.io/smartChemistApi/public/all-pharmacy-names-in-sales', [
+            'headers' => [
+                'APPAUTHID' => 'intel_pharma',
+                'APPTOKEN' => '3fb8744b8ef6f65ed9d5687c4f45e6dd',
+            ],
+        ]);
+
+        $response = json_decode($response->getBody(), true);
+        $pharmacyNames = $response['data']['pharmacy_names'];
+
+        return view('sales', ['orders' => $orderList, 'pharmacyNames' => $pharmacyNames]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 }

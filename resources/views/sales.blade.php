@@ -101,12 +101,12 @@
                         <div class="input-group" style="margin-right: 20px;">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
-                                    Pharmacy Name
+                                    Select Pharmacy Name
                                     <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">AFC Pharmacy Gandaria</a></li>
-                                    <li><a href="#">Apollo Pharmacy</a></li>
-                                    <li><a href="#">Square Pharmacy</a></li>
+                                    @foreach ($pharmacyNames as $name)
+                                        <li><a href="#">{{$name}}</a></li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
