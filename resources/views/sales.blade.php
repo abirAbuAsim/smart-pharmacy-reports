@@ -5,6 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <!-- Dropdown menu -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -13,9 +17,7 @@
     <script src="//code.jquery.com/jquery-1.12.3.js"></script>
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -28,6 +30,7 @@
     <!-- Date Picker JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+
 </head>
 <style>
 </style>
@@ -129,9 +132,22 @@
                     </thead>
                     <tbody>
                     @foreach ($orders as $order)
+                        <?php
+
+                        $orderArray = array(
+                            "invoice_number"         => $order['invoice_number']
+                        );
+
+                        $order_json = json_encode($orderArray);
+                        ?>
+
                         <tr>
                             <td id="date">{{ date('d-m-Y', strtotime($order['order_date'])) }}</td>
-                            <td>{{ $order['invoice_number'] }}</td>
+                            <td>
+                            <button type="button" style="text-decoration: none;" class="btn btn-link"
+                                    onclick='getOrderDetailsData(<?php echo $order_json; ?>)' data-orderId="{{$order['invoice_number'] }}" data-toggle="modal" data-target="#myModal">
+                                {{ $order['invoice_number'] }}</button>
+                            </td>
                             <td>{{ $order['pharmacy_name'] }}</td>
                             <td>{{ $order['chemist_mobile_number'] }}</td>
                             <td>{{ $order['order_status'] }}</td>
@@ -142,6 +158,83 @@
                     @endforeach
                     </tbody>
                 </table>
+
+
+
+                <!-- Modal -->
+                <div class="example-modal">
+                <div class="modal fade modal" id="reg_usr_details_modal" role="dialog">
+                    <div class="modal-dialog" style="width: 460px;">
+                        <div class="modal-content">
+                            <!-- <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title">Invoice View</h4>
+                            </div> -->
+                            <div class="modal-body">
+                                <section class="invoice">
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+
+                                                    </thead>
+                                                    <tbody id="rxRowSpan">
+
+                                                    </tbody>
+
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="text-center"><strong>Invoice Number: <span id="invoice_number"></span></strong></td>
+                                                    </tr>
+                                                    <!-- <tr>
+                                                      <td class="text-center"><strong>Total Orders: <span id="total_orders_count"></span></strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td class="text-center"><strong>Total Orders Amount: <span id="total_orders_amount"></span></strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td class="text-center"><strong>Reward Bonus: <span id="reward_bonus"></span></strong></td>
+                                                    </tr> -->
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div><!-- /.col -->
+
+
+                                        <!-- <div class="col-xs-6">
+                                          <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                            N:B - Demo text demo text demo text, Demo text demo text.
+                                          </p>
+                                        </div> -->
+                                    </div>
+
+                                    <!-- this row will not appear when printing -->
+                                    <div class="row no-print">
+                                        <div class="col-xs-12">
+                                            <!-- <a href="#" target="_blank" class="btn btn-default pull-right" onclick="printDiv('myModal');"><i class="fa fa-print"></i> Print</a> -->
+                                            <!-- <button class="btn btn-primary pull-right" onclick="printInvoice('myModal');" > <i class="fa fa-print" ></i> Print  </button> -->
+                                            <!-- <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit</button> -->
+                                            <!-- <button class="btn btn-primary pull-right" id="cmd" style="margin-right: 5px;"><i class="fa fa-download"></i> PDF</button> -->
+                                            <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </section><!-- /.content -->
+                                <div class="clearfix"></div>
+                            </div>
+                            <!-- <div class="modal-footer"> -->
+                            <!-- <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Close</button> -->
+                            <!-- <button type="button" class="btn btn-success">Ok</button> -->
+                            <!-- </div> -->
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            </div><!-- /.example-modal -->
+
+
             </div>
         </div>
     </main>
@@ -164,5 +257,16 @@
         }).datepicker('update', new Date());
     });
 
+    $('#myModal').on('show', function(e) {
+        var clickedRow = $(e.relatedTarget);
+        var orderId = clickedRow.data('orderId');
+        var modal = $(this);
+        modal.find('.modal-title').html('Order ID: ' + orderId);
+    });
+
+    function getOrderDetailsData(orderArray) {
+        $('#invoice_number').html(orderArray.invoice_number);
+        $('#reg_usr_details_modal').modal('toggle');
+    }
 </script>
 </html>

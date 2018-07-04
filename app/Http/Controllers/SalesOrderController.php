@@ -17,7 +17,7 @@ class SalesOrderController extends Controller
     {
         $client = new Client;
 
-        $response = $client->post('http://3931ccf5.ngrok.io/smartChemistApi/public/all-sales-orders', [
+        $response = $client->post('http://8a8d88e1.ngrok.io/smartChemistApi/public/all-sales-orders', [
             'headers' => [
                 'APPAUTHID' => 'intel_pharma',
                 'APPTOKEN' => '3fb8744b8ef6f65ed9d5687c4f45e6dd',
@@ -29,7 +29,7 @@ class SalesOrderController extends Controller
 
         // Get pharmacy names
         $client = new Client;
-        $response = $client->get('http://3931ccf5.ngrok.io/smartChemistApi/public/all-pharmacies-with-sales', [
+        $response = $client->get('http://8a8d88e1.ngrok.io/smartChemistApi/public/all-pharmacies-with-sales', [
             'headers' => [
                 'APPAUTHID' => 'intel_pharma',
                 'APPTOKEN' => '3fb8744b8ef6f65ed9d5687c4f45e6dd',
@@ -67,7 +67,7 @@ class SalesOrderController extends Controller
         dd($toDatePickerInput);
         dd($selectedPharmacy);*/
 
-        $response = $client->post('http://3931ccf5.ngrok.io/smartChemistApi/public/search-sales-orders-by-params', [
+        $response = $client->post('http://8a8d88e1.ngrok.io/smartChemistApi/public/search-sales-orders-by-params', [
             'form_params' => [
                 'from_date' => $fromDatePickerInput,
                 'to_date' =>$toDatePickerInput,
@@ -84,7 +84,7 @@ class SalesOrderController extends Controller
 
         // Get pharmacy names
         $client = new Client;
-        $response = $client->get('http://3931ccf5.ngrok.io/smartChemistApi/public/all-pharmacies-with-sales', [
+        $response = $client->get('http://8a8d88e1.ngrok.io/smartChemistApi/public/all-pharmacies-with-sales', [
             'headers' => [
                 'APPAUTHID' => 'intel_pharma',
                 'APPTOKEN' => '3fb8744b8ef6f65ed9d5687c4f45e6dd',
