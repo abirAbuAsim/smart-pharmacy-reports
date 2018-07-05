@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <!-- -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -35,7 +34,6 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 
-
 </head>
 <style>
 </style>
@@ -55,7 +53,6 @@
                 </button>
                 <a class="navbar-brand" href="#">AFC</a>
             </div>
-
         </div><!-- /.container-fluid -->
     </nav>
 
@@ -122,9 +119,9 @@
                         <tr>
                             <td class="text-center" id="date">{{ date('d-m-Y', strtotime($order['order_date'])) }}</td>
                             <td class="text-center">
-                            <button type="button" style="text-decoration: none;" class="btn btn-link"
-                                    onclick='getOrderDetailsData(<?php echo $order_json; ?>)' data-orderId="{{$order['invoice_number'] }}" data-toggle="modal" data-target="#myModal">
-                                {{ $order['invoice_number'] }}</button>
+                                <button type="button" style="text-decoration: none;" class="btn btn-link"
+                                        onclick='getOrderDetailsData(<?php echo $order_json; ?>)' data-orderId="{{$order['invoice_number'] }}" data-toggle="modal" data-target="#myModal">
+                                    {{ $order['invoice_number'] }}</button>
                             </td>
                             <td class="text-center">{{ $order['pharmacy_name'] }}</td>
                             <td class="text-center">{{ $order['chemist_mobile_number'] }}</td>
@@ -140,68 +137,68 @@
 
                 <!-- Modal -->
                 <div class="example-modal">
-                <div class="modal fade modal" id="reg_usr_details_modal" role="dialog">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <!-- <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title">Invoice View</h4>
-                            </div> -->
-                            <div class="modal-body">
-                                <section class="invoice">
-                                    <h2>Order Details</h2>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <h2 id="modalHeaderTitle"></h2>
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="text-center">Company Name</th>
-                                                        <th class="text-center">Medicine Name</th>
-                                                        <th class="text-right">Quantity</th>
-                                                        <th class="text-right">Price</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="rxRowSpan" class="text-center">
+                    <div class="modal fade modal" id="reg_usr_details_modal" role="dialog">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <!-- <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <h4 class="modal-title">Invoice View</h4>
+                                </div> -->
+                                <div class="modal-body">
+                                    <section class="invoice">
+                                        <h2>Order Details</h2>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <h2 id="modalHeaderTitle"></h2>
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="text-center">Company Name</th>
+                                                            <th class="text-center">Medicine Name</th>
+                                                            <th class="text-right">Quantity</th>
+                                                            <th class="text-right">Price</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="rxRowSpan" class="text-center">
 
-                                                    </tbody>
-
-
-                                                </table>
-                                            </div>
-
-                                        </div><!-- /.col -->
+                                                        </tbody>
 
 
-                                        <!-- <div class="col-xs-6">
-                                          <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                                            N:B - Demo text demo text demo text, Demo text demo text.
-                                          </p>
-                                        </div> -->
-                                    </div>
+                                                    </table>
+                                                </div>
 
-                                    <!-- this row will not appear when printing -->
-                                    <div class="row no-print">
-                                        <div class="col-xs-12">
-                                            <!-- <a href="#" target="_blank" class="btn btn-default pull-right" onclick="printDiv('myModal');"><i class="fa fa-print"></i> Print</a> -->
-                                            <!-- <button class="btn btn-primary pull-right" onclick="printInvoice('myModal');" > <i class="fa fa-print" ></i> Print  </button> -->
-                                            <!-- <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit</button> -->
-                                            <!-- <button class="btn btn-primary pull-right" id="cmd" style="margin-right: 5px;"><i class="fa fa-download"></i> PDF</button> -->
-                                            <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Close</button>
+                                            </div><!-- /.col -->
+
+
+                                            <!-- <div class="col-xs-6">
+                                              <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                                N:B - Demo text demo text demo text, Demo text demo text.
+                                              </p>
+                                            </div> -->
                                         </div>
-                                    </div>
-                                </section><!-- /.content -->
-                                <div class="clearfix"></div>
-                            </div>
-                            <!-- <div class="modal-footer"> -->
-                            <!-- <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Close</button> -->
-                            <!-- <button type="button" class="btn btn-success">Ok</button> -->
-                            <!-- </div> -->
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-            </div><!-- /.example-modal -->
+
+                                        <!-- this row will not appear when printing -->
+                                        <div class="row no-print">
+                                            <div class="col-xs-12">
+                                                <!-- <a href="#" target="_blank" class="btn btn-default pull-right" onclick="printDiv('myModal');"><i class="fa fa-print"></i> Print</a> -->
+                                                <!-- <button class="btn btn-primary pull-right" onclick="printInvoice('myModal');" > <i class="fa fa-print" ></i> Print  </button> -->
+                                                <!-- <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit</button> -->
+                                                <!-- <button class="btn btn-primary pull-right" id="cmd" style="margin-right: 5px;"><i class="fa fa-download"></i> PDF</button> -->
+                                                <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </section><!-- /.content -->
+                                    <div class="clearfix"></div>
+                                </div>
+                                <!-- <div class="modal-footer"> -->
+                                <!-- <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Close</button> -->
+                                <!-- <button type="button" class="btn btn-success">Ok</button> -->
+                                <!-- </div> -->
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                </div><!-- /.example-modal -->
 
 
             </div>

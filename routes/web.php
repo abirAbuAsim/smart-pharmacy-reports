@@ -26,3 +26,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/sales', 'SalesOrderController@showSearchResult');
+
+Route::get('/purchase', 'PurchaseOrderController@index')->name('purchase');
+Route::post('/purchase-search', 'PurchaseOrderController@showSearchResult');

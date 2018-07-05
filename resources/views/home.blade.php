@@ -26,7 +26,7 @@
                             <li class="list-group-item">Cras justo odio</li>
                             <li class="list-group-item">Dapibus ac facilisis in</li>
                             --}}
-                            <li class="list-group-item"><a href="#" class="btn btn-primary">Go to Purchase Page</a></li>
+                            <li class="list-group-item"><a href="{{ URL::to('purchase')}}" class="btn btn-primary">Go to Purchase Page</a></li>
                         </ul>
                     </div>
                 </div>
