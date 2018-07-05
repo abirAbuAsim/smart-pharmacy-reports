@@ -17,7 +17,7 @@ class SalesOrderController extends Controller
     {
         $client = new Client;
 
-        $response = $client->post('http://8a8d88e1.ngrok.io/smartChemistApi/public/all-sales-orders', [
+        $response = $client->post('http://f883ab6c.ngrok.io/smartChemistApi/public/all-sales-orders', [
             'headers' => [
                 'APPAUTHID' => 'intel_pharma',
                 'APPTOKEN' => '3fb8744b8ef6f65ed9d5687c4f45e6dd',
@@ -29,7 +29,7 @@ class SalesOrderController extends Controller
 
         // Get pharmacy names
         $client = new Client;
-        $response = $client->get('http://8a8d88e1.ngrok.io/smartChemistApi/public/all-pharmacies-with-sales', [
+        $response = $client->get('http://f883ab6c.ngrok.io/smartChemistApi/public/all-pharmacies-with-sales', [
             'headers' => [
                 'APPAUTHID' => 'intel_pharma',
                 'APPTOKEN' => '3fb8744b8ef6f65ed9d5687c4f45e6dd',
@@ -39,7 +39,20 @@ class SalesOrderController extends Controller
         $response = json_decode($response->getBody(), true);
         $pharmacyList = $response['data']['pharmacy_list'];
 
-        return view('sales', ['orders' => $orderList, 'pharmacyList' => $pharmacyList]);
+        // Get company list
+        $client = new Client;
+        $response = $client->get('http://35.160.205.158:81/mrapi/v0.0.1/company-list');
+
+        $response = json_decode($response->getBody(), true);
+        $companyListFromApi = $response['data']['company_list'];
+
+        $companyArray = array();
+        foreach ($companyListFromApi as $company){
+            $companyArray[$company['id']] = $company['company_name'];
+        }
+
+        return view('sales', ['orders' => $orderList, 'pharmacyList' => $pharmacyList,
+            'companyArray' => $companyArray]);
     }
 
 
@@ -67,7 +80,7 @@ class SalesOrderController extends Controller
         dd($toDatePickerInput);
         dd($selectedPharmacy);*/
 
-        $response = $client->post('http://8a8d88e1.ngrok.io/smartChemistApi/public/search-sales-orders-by-params', [
+        $response = $client->post('http://f883ab6c.ngrok.io/smartChemistApi/public/search-sales-orders-by-params', [
             'form_params' => [
                 'from_date' => $fromDatePickerInput,
                 'to_date' =>$toDatePickerInput,
@@ -84,7 +97,7 @@ class SalesOrderController extends Controller
 
         // Get pharmacy names
         $client = new Client;
-        $response = $client->get('http://8a8d88e1.ngrok.io/smartChemistApi/public/all-pharmacies-with-sales', [
+        $response = $client->get('http://f883ab6c.ngrok.io/smartChemistApi/public/all-pharmacies-with-sales', [
             'headers' => [
                 'APPAUTHID' => 'intel_pharma',
                 'APPTOKEN' => '3fb8744b8ef6f65ed9d5687c4f45e6dd',
@@ -94,8 +107,20 @@ class SalesOrderController extends Controller
         $response = json_decode($response->getBody(), true);
         $pharmacyList = $response['data']['pharmacy_list'];
 
+        // Get company list
+        $client = new Client;
+        $response = $client->get('http://35.160.205.158:81/mrapi/v0.0.1/company-list');
+
+        $response = json_decode($response->getBody(), true);
+        $companyListFromApi = $response['data']['company_list'];
+
+        $companyArray = array();
+        foreach ($companyListFromApi as $company){
+            $companyArray[$company['id']] = $company['company_name'];
+        }
+
         return view('sales', ['orders' => $searchResultOrderList, 'pharmacyList' => $pharmacyList,
             'fromDatePickerValue' => $fromDatePickerInput, 'toDatePickerValue' => $toDatePickerInput,
-            'selectedPharmacy' => $selectedPharmacy]);
+            'selectedPharmacy' => $selectedPharmacy, 'companyArray' => $companyArray]);
     }
 }

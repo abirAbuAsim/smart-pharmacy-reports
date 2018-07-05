@@ -31,6 +31,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+
 </head>
 <style>
 </style>
@@ -120,14 +123,13 @@
                 <table id="salesOrderTable" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                     <tr>
-                        <th>Order Date</th>
-                        <th>Invoice Number</th>
-                        <th>Pharmacy Name</th>
-                        <th>Contact Number</th>
-                        <th>Order Status</th>
-                        <th>Actual Price</th>
-                        <th>Payable Price</th>
-                        <th>Discount</th>
+                        <th class="text-center">Order Date</th>
+                        <th class="text-center">Invoice Number</th>
+                        <th class="text-center">Pharmacy Name</th>
+                        <th class="text-center">Contact Number</th>
+                        <th class="text-right">Actual Price</th>
+                        <th class="text-right">Payable Price</th>
+                        <th class="text-right">Discount</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -135,25 +137,25 @@
                         <?php
 
                         $orderArray = array(
-                            "invoice_number"         => $order['invoice_number']
+                            "order_details_list"         => $order['order_details_list'],
+                            "company_list"         => $companyArray
                         );
 
                         $order_json = json_encode($orderArray);
                         ?>
 
                         <tr>
-                            <td id="date">{{ date('d-m-Y', strtotime($order['order_date'])) }}</td>
-                            <td>
+                            <td class="text-center" id="date">{{ date('d-m-Y', strtotime($order['order_date'])) }}</td>
+                            <td class="text-center">
                             <button type="button" style="text-decoration: none;" class="btn btn-link"
                                     onclick='getOrderDetailsData(<?php echo $order_json; ?>)' data-orderId="{{$order['invoice_number'] }}" data-toggle="modal" data-target="#myModal">
                                 {{ $order['invoice_number'] }}</button>
                             </td>
-                            <td>{{ $order['pharmacy_name'] }}</td>
-                            <td>{{ $order['chemist_mobile_number'] }}</td>
-                            <td>{{ $order['order_status'] }}</td>
-                            <td>{{ $order['total_actual_price'] }}</td>
-                            <td>{{ $order['total_payable_price'] }}</td>
-                            <td>{{ $order['discount'] }}</td>
+                            <td class="text-center">{{ $order['pharmacy_name'] }}</td>
+                            <td class="text-center">{{ $order['chemist_mobile_number'] }}</td>
+                            <td class="text-right">{{ $order['total_actual_price'] }}</td>
+                            <td class="text-right">{{ $order['total_payable_price'] }}</td>
+                            <td class="text-right">{{ $order['discount'] }}</td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -164,7 +166,7 @@
                 <!-- Modal -->
                 <div class="example-modal">
                 <div class="modal fade modal" id="reg_usr_details_modal" role="dialog">
-                    <div class="modal-dialog" style="width: 460px;">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <!-- <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -172,33 +174,25 @@
                             </div> -->
                             <div class="modal-body">
                                 <section class="invoice">
-
+                                    <h2>Order Details</h2>
                                     <div class="row">
                                         <div class="col-xs-12">
+                                            <h2 id="modalHeaderTitle"></h2>
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-bordered">
                                                     <thead>
-
+                                                    <tr>
+                                                        <th class="text-center">Company Name</th>
+                                                        <th class="text-center">Medicine Name</th>
+                                                        <th class="text-right">Quantity</th>
+                                                        <th class="text-right">Price</th>
+                                                    </tr>
                                                     </thead>
-                                                    <tbody id="rxRowSpan">
+                                                    <tbody id="rxRowSpan" class="text-center">
 
                                                     </tbody>
 
-                                                    <tbody>
-                                                    <tr>
-                                                        <td class="text-center"><strong>Invoice Number: <span id="invoice_number"></span></strong></td>
-                                                    </tr>
-                                                    <!-- <tr>
-                                                      <td class="text-center"><strong>Total Orders: <span id="total_orders_count"></span></strong></td>
-                                                    </tr>
-                                                    <tr>
-                                                      <td class="text-center"><strong>Total Orders Amount: <span id="total_orders_amount"></span></strong></td>
-                                                    </tr>
-                                                    <tr>
-                                                      <td class="text-center"><strong>Reward Bonus: <span id="reward_bonus"></span></strong></td>
-                                                    </tr> -->
 
-                                                    </tbody>
                                                 </table>
                                             </div>
 
@@ -242,7 +236,12 @@
 </body>
 <script>
     $(document).ready(function () {
-        $('#salesOrderTable').DataTable();
+        $('#salesOrderTable').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'print'
+            ]
+        } );
     });
 
     $(function () {
@@ -264,9 +263,34 @@
         modal.find('.modal-title').html('Order ID: ' + orderId);
     });
 
-    function getOrderDetailsData(orderArray) {
-        $('#invoice_number').html(orderArray.invoice_number);
+    function getOrderDetailsData(order) {
+        orderList = order['order_details_list'];
+        companyList = order['company_list'];
+        lengthOfArray = orderList.length;
+        tableRow = "<tr>";
+        for (i = 0; i < lengthOfArray; i++) {
+
+            $companyName = 'Unknown';
+            if(orderList[i]['manufacturer_id']) {
+                $companyName = companyList[orderList[i]['manufacturer_id']];
+            }
+
+            tableRow += "<td>" + $companyName + "</td>";
+            tableRow += "<td>" + orderList[i]['medicine_name'] + "</td>";
+            tableRow += "<td class='text-right'>" + orderList[i]['quantity'] + "</td>";
+            tableRow += "<td class='text-right'>" + orderList[i]['price'] + "</td></tr>";
+
+            $('.example-modal').find('.modal-body tbody')
+                .append(tableRow);
+
+            tableRow = "<tr>";
+        }
         $('#reg_usr_details_modal').modal('toggle');
     }
 </script>
+<style>
+    div.dt-buttons {
+        float: left;
+    }
+</style>
 </html>
